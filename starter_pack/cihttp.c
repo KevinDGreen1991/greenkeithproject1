@@ -15,7 +15,7 @@ void AddHeaderToRequest(struct httprequest *req, char *name, char *value)
     NVL *header = malloc(sizeof(NVL));
     header->name = name;
     header->value = value;
-    if (req->headers)
+    if (req->headers) 
         header->next = req->headers;
     else
         header->next = NULL;
