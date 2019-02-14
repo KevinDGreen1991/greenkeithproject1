@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>PROJ01</title>
+
+
+<style type="text/css">
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA09pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoMTMuMCAyMDEyMDMwNS5tLjQxNSAyMDEyLzAzLzA1OjIxOjAwOjAwKSAgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OUM2NjlDQjI4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OUM2NjlDQjM4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5QzY2OUNCMDg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5QzY2OUNCMTg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PsQhXeAAAABfSURBVHjaYvz//z8DJYCRUgMYQAbAMBQIAvEqkBQWXI6sHqwHiwG70TTBxGaiWwjCTGgOUgJiF1J8wMRAIUA34B4Q76HUBelAfJYSA0CuMIEaRP8wGIkGMA54bgQIMACAmkXJi0hKJQAAAABJRU5ErkJggg==) no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OENDRjNBN0E2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OENDRjNBN0I2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4Q0NGM0E3ODY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4Q0NGM0E3OTY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqqezsUAAAAfSURBVHjaYmRABcYwBiM2QSA4y4hNEKYDQxAEAAIMAHNGAzhkPOlYAAAAAElFTkSuQmCC) repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0;
+}
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+li {
+  margin: 0; }
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  padding: 0;border-collapse: collapse; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+
+kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font-size: 11px;
+  line-height: 10px;
+  color: #555;
+  vertical-align: middle;
+  background-color: #fcfcfc;
+  border: solid 1px #ccc;
+  border-bottom-color: #bbb;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #bbb
+}
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:0 auto;
+    }
+}
+@media print {
+	table, pre {
+		page-break-inside: avoid;
+	}
+	pre {
+		word-wrap: break-word;
+	}
+}
+</style>
+
+<style type="text/css">
+/**
+ * prism.js default theme for JavaScript, CSS and HTML
+ * Based on dabblet (http://dabblet.com)
+ * @author Lea Verou
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: black;
+	background: none;
+	text-shadow: 0 1px white;
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+pre[class*="language-"]::-moz-selection, pre[class*="language-"] ::-moz-selection,
+code[class*="language-"]::-moz-selection, code[class*="language-"] ::-moz-selection {
+	text-shadow: none;
+	background: #b3d4fc;
+}
+
+pre[class*="language-"]::selection, pre[class*="language-"] ::selection,
+code[class*="language-"]::selection, code[class*="language-"] ::selection {
+	text-shadow: none;
+	background: #b3d4fc;
+}
+
+@media print {
+	code[class*="language-"],
+	pre[class*="language-"] {
+		text-shadow: none;
+	}
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #f5f2f0;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: slategray;
+}
+
+.token.punctuation {
+	color: #999;
+}
+
+.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #905;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #690;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+	color: #a67f59;
+	background: hsla(0, 0%, 100%, .5);
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+	color: #07a;
+}
+
+.token.function {
+	color: #DD4A68;
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+	color: #e90;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<h1 id="toc_0">PROJ01: <code>cihttp</code></h1>
+
+<p><em>ver 2019.spring.1.0</em></p>
+
+<p><em>Changes</em></p>
+
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>ver.</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Feb 13</td>
+<td>1.0</td>
+<td><em>Initial release.</em></td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="toc_1">Overview</h2>
+
+<h3 id="toc_2">Goal</h3>
+
+<p>The goal is to create a simple HTTP server called <code>cihttp</code>. HTTP is an application layer protocol on top of TCP/IP, so we need not worry about transporting the packets, handling fragmentation, switching packets, etc. We will see how data is encapsulated at this layer using the service/peer interfaces provided by HTTP.</p>
+
+<p>We will not fully implement HTTP. We will implement three request types: GET, POST, and HEAD.</p>
+
+<h3 id="toc_3">Milestones</h3>
+
+<ol>
+<li>Implement the HTTP parser.</li>
+<li>Implement HTTP HEAD request/response.</li>
+<li>Implement HTTP GET request/response.</li>
+<li>Implement HTTP POST request/response.</li>
+</ol>
+
+<h3 id="toc_4">Due Dates</h3>
+
+<table>
+<thead>
+<tr>
+<th>Milestone</th>
+<th>Date</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Milestone 1</td>
+<td>Mon Feb 18</td>
+</tr>
+<tr>
+<td>Milestone 2</td>
+<td>Mon Feb 25</td>
+</tr>
+<tr>
+<td>Milestone 3</td>
+<td>Wed Feb 27</td>
+</tr>
+<tr>
+<td>Milestone 4</td>
+<td>Mon Mar 4</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="toc_5">Grading</h3>
+
+<ul>
+<li>100 points total
+
+<ul>
+<li><strong>The provided .c and .h files must be used for credit.</strong></li>
+<li>(10 points) code style
+
+<ul>
+<li>Style is unique per submission</li>
+<li>Consistent style used throughout program</li>
+<li>Whitespace is sane and used properly</li>
+<li>Comments are helpful and not pointless</li>
+</ul></li>
+<li>(10 points) <code>git</code> used properly
+
+<ul>
+<li>Create a bitbucket.org repository for your group.</li>
+<li>Add each other to the repo</li>
+<li>Add me as an admin ( kevin.scrivnor988@csuci.edu )</li>
+<li>Each milestone is tagged at appropriate commit</li>
+<li>Pull Request made for completed project</li>
+</ul></li>
+<li>(10 points) Milestone 1</li>
+<li>(20 points) Milestone 2</li>
+<li>(30 points) Milestone 3</li>
+<li>(20 points) Milestone 4</li>
+</ul></li>
+</ul>
+
+<p>Each milestone will be judged by correctness and readability.</p>
+
+<h2 id="toc_6">Resources</h2>
+
+<ul>
+<li>Beej&#39;s Guide to Network Programming
+
+<ul>
+<li>This is an excellent source for all the libraries/functions you need for socket programming.</li>
+<li>Link: <a href="https://beej.us/guide/bgnet/html/multi/index.html">here</a>.</li>
+</ul></li>
+<li>Videos about HTTP
+
+<ul>
+<li>Same author as the videos we watch in class.</li>
+<li>These are short and worth watching.</li>
+<li><a href="https://www.youtube.com/watch?v=48ftjmVJYHs">HTTP Requests</a></li>
+<li><a href="https://www.youtube.com/watch?v=LWRfh2pt2zI">HTTP Request Example</a></li>
+<li><a href="https://www.youtube.com/watch?v=BUMe-zVLcrs">HTTP Response</a></li>
+<li><a href="https://www.youtube.com/watch?v=quOyE56AfAw">HTTP Response Example</a></li>
+</ul></li>
+<li>RFC&#39;s (Request For Comments)
+
+<ul>
+<li>These are more helpful than they first appear.</li>
+<li><a href="https://tools.ietf.org/html/rfc2616#section-5">2616 section 5</a></li>
+<li><a href="https://tools.ietf.org/html/rfc2616#section-6">2616 section 6</a></li>
+</ul></li>
+</ul>
+
+<h2 id="toc_7">Testing</h2>
+
+<ol>
+<li>Configure the firewall to let port 9001 through. 
+
+<ul>
+<li><em>You only have to perform this step once.</em></li>
+<li><code>sudo firewall-cmd --zone=public --add-port=9001/tcp --permanent</code></li>
+<li><code>sudo firewall-cmd --reload</code></li>
+</ul></li>
+<li>Run your http server on the CentOS machine.</li>
+<li>Open your web browser and navigate to <code>http://192.168.56.101:9001/hello.html</code></li>
+<li>Check the output of your server.</li>
+</ol>
+
+<p>Also <em>Postman</em> is a very helpful tool for debugging when working on projects like this.</p>
+
+<h2 id="toc_8">Requirements</h2>
+
+<h3 id="toc_9">Submission</h3>
+
+<ul>
+<li>You <strong>must</strong> use the starter pack as your starting/finishing point.</li>
+<li>If you&#39;re working in a group, submit only once. Inform me of who is in your group. </li>
+<li>Submissions are done through git. Milestones must be tagged. A pull request should be made at the end for the final submission.</li>
+<li>You&#39;ll have to make a branch as you are not allowed to commit to master.</li>
+</ul>
+
+<h3 id="toc_10">Parsing and Printing</h3>
+
+<ul>
+<li>You <strong>must</strong> use the data structures provided in the <code>.h</code> file.</li>
+<li>Your output format should match as shown in the <em>Output Requirements</em> section.</li>
+<li><code>strtok()</code> is totally allowed in this class!</li>
+</ul>
+
+<h3 id="toc_11">Handling Requests/Generating Responses</h3>
+
+<h4 id="toc_12">HEAD</h4>
+
+<p>Only returns the header as if a normal GET request, <em>BUT</em> absolutely no body should be attached.</p>
+
+<h4 id="toc_13">GET</h4>
+
+<ul>
+<li>Perform a HTTP/1.1 GET (see the RFC for details)</li>
+<li>All file requests should search the <code>www</code> folder for the files.</li>
+<li>A status code 404 should be sent when a file is not found. Along with some HTML to say &quot;File not found&quot;</li>
+<li>Successful status code is 200 and the reason should be &quot;OK&quot;</li>
+<li>Required headers are:
+
+<ul>
+<li>Content-length</li>
+<li>Server (should say cihttp)</li>
+<li>Last-modified
+
+<ul>
+<li>The last modified date in the format specified in the RFC (must be GMT!) </li>
+</ul></li>
+</ul></li>
+</ul>
+
+<h4 id="toc_14">POST</h4>
+
+<ul>
+<li>Perform a HTTP/1.1 POST (see RFC for details)</li>
+<li>To test a POST request, use <code>form.html</code> (after you have implemented GET)</li>
+<li>The URL form.html submits to is <code>post_test</code>.</li>
+<li>Store the keys and values from the POST request inside the <code>post_data</code> NVL structure of the request.</li>
+<li>Reply with a simple response that contains the data in HTML.</li>
+</ul>
+
+<h3 id="toc_15">Output Requirements</h3>
+
+<ul>
+<li>Your web browser should be able to load the <code>hello.html</code>, <code>fancy_hello.html</code>, and <code>form.html</code> pages successfully.</li>
+<li>The form submission should POST and you should have hardcoded a simple page displaying the results. </li>
+</ul>
+
+<h4 id="toc_16"><code>fancy_hello.html</code> (server side output)</h4>
+
+<div><pre><code class="language-none">HTTP 1.1 GET Request:
+Request-URI: /fancy_hello.html
+Headers:
+        Cache-Control: max-age=0
+        If-Modified-Since: Wed, 19 Sep 2018 04:09:58 GMT
+        Upgrade-Insecure-Requests: 1
+        Connection: keep-alive
+        Accept-Encoding: gzip, deflate
+        Accept-Language: en-US,en;q=0.5
+        Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+        User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:62.0) Gecko/20100101 Firefox/62.0
+        Host: localhost:9001
+server: got a connection from 127.0.0.1
+HTTP 1.1 GET Request:
+Request-URI: /style.css
+Headers:
+        Cache-Control: max-age=0
+        If-Modified-Since: Wed, 19 Sep 2018 04:10:21 GMT
+        Connection: keep-alive
+        Referer: http://localhost:9001/fancy_hello.html
+        Accept-Encoding: gzip, deflate
+        Accept-Language: en-US,en;q=0.5
+        Accept: text/css,*/*;q=0.1
+        User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:62.0) Gecko/20100101 Firefox/62.0
+        Host: localhost:9001</code></pre></div>
+
+<h4 id="toc_17"><code>fancy_hello.html</code> (client side output)</h4>
+
+<p>Note the response headers, status code, the fact that it loaded two pages, and the style of the page. This is the network view from Firefox&#39;s inspector.</p>
+
+<p><img src="img/fancy_hello_out.png" alt=""></p>
+
+<h4 id="toc_18">404 Page</h4>
+
+<p>In the event a page is requested that is not in the <code>www</code> folder, a 404 status should be sent, along with a simple hardcoded webpage that says &quot;File not found&quot;  You&#39;re welcome to make a fancy page if you&#39;d like.</p>
+
+<h4 id="toc_19">POST Output</h4>
+
+<p>Loading the form.html page:</p>
+
+<p><img src="img/form_html_out.png" alt=""></p>
+
+<p>After submitting the form:</p>
+
+<p><img src="img/post_test_out.png" alt=""></p>
+
+<p>Server side output:</p>
+
+<div><pre><code class="language-none">server: got a connection from 127.0.0.1
+HTTP 1.1 GET Request:
+Request-URI: /form.html
+Headers:
+        Cache-Control: max-age=0
+        If-Modified-Since: Wed, 19 Sep 2018 21:14:59 GMT
+        Upgrade-Insecure-Requests: 1
+        Connection: keep-alive
+        Accept-Encoding: gzip, deflate
+        Accept-Language: en-US,en;q=0.5
+        Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+        User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:62.0) Gecko/20100101 Firefox/62.0
+        Host: localhost:9001
+server: got a connection from 127.0.0.1
+HTTP 1.1 POST Request:
+Request-URI: /post_test
+Headers:
+        Upgrade-Insecure-Requests: 1
+        Connection: keep-alive
+        Content-Length: 35
+        Content-Type: application/x-www-form-urlencoded
+        Referer: http://localhost:9001/form.html
+        Accept-Encoding: gzip, deflate
+        Accept-Language: en-US,en;q=0.5
+        Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+        User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:62.0) Gecko/20100101 Firefox/62.0
+        Host: localhost:9001
+
+name=Kevin+Scrivnor&amp;course=COMP+429</code></pre></div>
+
+<p><em>Note that the data is URL encoded, please convert the +&#39;s to spaces!</em></p>
+
+
+
+<script type="text/javascript">
+var _self="undefined"!=typeof window?window:"undefined"!=typeof WorkerGlobalScope&&self instanceof WorkerGlobalScope?self:{},Prism=function(){var e=/\blang(?:uage)?-(\w+)\b/i,t=0,n=_self.Prism={util:{encode:function(e){return e instanceof a?new a(e.type,n.util.encode(e.content),e.alias):"Array"===n.util.type(e)?e.map(n.util.encode):e.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/\u00a0/g," ")},type:function(e){return Object.prototype.toString.call(e).match(/\[object (\w+)\]/)[1]},objId:function(e){return e.__id||Object.defineProperty(e,"__id",{value:++t}),e.__id},clone:function(e){var t=n.util.type(e);switch(t){case"Object":var a={};for(var r in e)e.hasOwnProperty(r)&&(a[r]=n.util.clone(e[r]));return a;case"Array":return e.map&&e.map(function(e){return n.util.clone(e)})}return e}},languages:{extend:function(e,t){var a=n.util.clone(n.languages[e]);for(var r in t)a[r]=t[r];return a},insertBefore:function(e,t,a,r){r=r||n.languages;var l=r[e];if(2==arguments.length){a=arguments[1];for(var i in a)a.hasOwnProperty(i)&&(l[i]=a[i]);return l}var o={};for(var s in l)if(l.hasOwnProperty(s)){if(s==t)for(var i in a)a.hasOwnProperty(i)&&(o[i]=a[i]);o[s]=l[s]}return n.languages.DFS(n.languages,function(t,n){n===r[e]&&t!=e&&(this[t]=o)}),r[e]=o},DFS:function(e,t,a,r){r=r||{};for(var l in e)e.hasOwnProperty(l)&&(t.call(e,l,e[l],a||l),"Object"!==n.util.type(e[l])||r[n.util.objId(e[l])]?"Array"!==n.util.type(e[l])||r[n.util.objId(e[l])]||(r[n.util.objId(e[l])]=!0,n.languages.DFS(e[l],t,l,r)):(r[n.util.objId(e[l])]=!0,n.languages.DFS(e[l],t,null,r)))}},plugins:{},highlightAll:function(e,t){var a={callback:t,selector:'code[class*="language-"], [class*="language-"] code, code[class*="lang-"], [class*="lang-"] code'};n.hooks.run("before-highlightall",a);for(var r,l=a.elements||document.querySelectorAll(a.selector),i=0;r=l[i++];)n.highlightElement(r,e===!0,a.callback)},highlightElement:function(t,a,r){for(var l,i,o=t;o&&!e.test(o.className);)o=o.parentNode;o&&(l=(o.className.match(e)||[,""])[1],i=n.languages[l]),t.className=t.className.replace(e,"").replace(/\s+/g," ")+" language-"+l,o=t.parentNode,/pre/i.test(o.nodeName)&&(o.className=o.className.replace(e,"").replace(/\s+/g," ")+" language-"+l);var s=t.textContent,u={element:t,language:l,grammar:i,code:s};if(!s||!i)return n.hooks.run("complete",u),void 0;if(n.hooks.run("before-highlight",u),a&&_self.Worker){var c=new Worker(n.filename);c.onmessage=function(e){u.highlightedCode=e.data,n.hooks.run("before-insert",u),u.element.innerHTML=u.highlightedCode,r&&r.call(u.element),n.hooks.run("after-highlight",u),n.hooks.run("complete",u)},c.postMessage(JSON.stringify({language:u.language,code:u.code,immediateClose:!0}))}else u.highlightedCode=n.highlight(u.code,u.grammar,u.language),n.hooks.run("before-insert",u),u.element.innerHTML=u.highlightedCode,r&&r.call(t),n.hooks.run("after-highlight",u),n.hooks.run("complete",u)},highlight:function(e,t,r){var l=n.tokenize(e,t);return a.stringify(n.util.encode(l),r)},tokenize:function(e,t){var a=n.Token,r=[e],l=t.rest;if(l){for(var i in l)t[i]=l[i];delete t.rest}e:for(var i in t)if(t.hasOwnProperty(i)&&t[i]){var o=t[i];o="Array"===n.util.type(o)?o:[o];for(var s=0;s<o.length;++s){var u=o[s],c=u.inside,g=!!u.lookbehind,h=!!u.greedy,f=0,d=u.alias;u=u.pattern||u;for(var p=0;p<r.length;p++){var m=r[p];if(r.length>e.length)break e;if(!(m instanceof a)){u.lastIndex=0;var y=u.exec(m),v=1;if(!y&&h&&p!=r.length-1){var b=r[p+1].matchedStr||r[p+1],k=m+b;if(p<r.length-2&&(k+=r[p+2].matchedStr||r[p+2]),u.lastIndex=0,y=u.exec(k),!y)continue;var w=y.index+(g?y[1].length:0);if(w>=m.length)continue;var _=y.index+y[0].length,P=m.length+b.length;if(v=3,P>=_){if(r[p+1].greedy)continue;v=2,k=k.slice(0,P)}m=k}if(y){g&&(f=y[1].length);var w=y.index+f,y=y[0].slice(f),_=w+y.length,S=m.slice(0,w),O=m.slice(_),j=[p,v];S&&j.push(S);var A=new a(i,c?n.tokenize(y,c):y,d,y,h);j.push(A),O&&j.push(O),Array.prototype.splice.apply(r,j)}}}}}return r},hooks:{all:{},add:function(e,t){var a=n.hooks.all;a[e]=a[e]||[],a[e].push(t)},run:function(e,t){var a=n.hooks.all[e];if(a&&a.length)for(var r,l=0;r=a[l++];)r(t)}}},a=n.Token=function(e,t,n,a,r){this.type=e,this.content=t,this.alias=n,this.matchedStr=a||null,this.greedy=!!r};if(a.stringify=function(e,t,r){if("string"==typeof e)return e;if("Array"===n.util.type(e))return e.map(function(n){return a.stringify(n,t,e)}).join("");var l={type:e.type,content:a.stringify(e.content,t,r),tag:"span",classes:["token",e.type],attributes:{},language:t,parent:r};if("comment"==l.type&&(l.attributes.spellcheck="true"),e.alias){var i="Array"===n.util.type(e.alias)?e.alias:[e.alias];Array.prototype.push.apply(l.classes,i)}n.hooks.run("wrap",l);var o="";for(var s in l.attributes)o+=(o?" ":"")+s+'="'+(l.attributes[s]||"")+'"';return"<"+l.tag+' class="'+l.classes.join(" ")+'" '+o+">"+l.content+"</"+l.tag+">"},!_self.document)return _self.addEventListener?(_self.addEventListener("message",function(e){var t=JSON.parse(e.data),a=t.language,r=t.code,l=t.immediateClose;_self.postMessage(n.highlight(r,n.languages[a],a)),l&&_self.close()},!1),_self.Prism):_self.Prism;var r=document.currentScript||[].slice.call(document.getElementsByTagName("script")).pop();return r&&(n.filename=r.src,document.addEventListener&&!r.hasAttribute("data-manual")&&document.addEventListener("DOMContentLoaded",n.highlightAll)),_self.Prism}();"undefined"!=typeof module&&module.exports&&(module.exports=Prism),"undefined"!=typeof global&&(global.Prism=Prism);
+</script>
+
+
+</body>
+
+</html>
