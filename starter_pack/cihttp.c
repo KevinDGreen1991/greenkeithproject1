@@ -81,9 +81,10 @@ struct httprequest *ParseHTTPRrequest(char *data)
         Version[i] = Version[i+5];
     Version[i] = '\0';
     req->version = atof(Version);
-    token = strtok(NULL, " \n");
+    token = strtok(NULL, "\r\n");
 
     //HANDLING THE REST
+    /*
     char temp1[256];
     char temp2[256];
     //if(strstr(token, "Host:"))
@@ -98,6 +99,7 @@ struct httprequest *ParseHTTPRrequest(char *data)
     AddHeaderToRequest(req, temp1, temp2);
     //token = strtok(NULL, "\r\n");
     token = strtok(NULL, " \n");
+    */
     while(token != NULL)
     {
         char *temp1a;
@@ -191,8 +193,11 @@ void PrintHTTPRequest(struct httprequest *req)
         printf("        %s %s\n", headers->name, headers->value);
         headers = headers->next;
     }
-    /*char *temp;
-    scanf("%s", temp);*/
+    /*
+    //THE FOLLOWING IS FOR TESTING INDIVIDUAL HTTP REQUESTS
+    char *temp;
+    scanf("%s", temp);
+    */
     //printf("\n")
     
 }
