@@ -205,8 +205,18 @@ void PrintHTTPRequest(struct httprequest *req)
 struct httpresponse *GenerateHTTPResponse(struct httprequest *req)
 {
     struct httpresponse *res = malloc(sizeof(struct httpresponse));
-    ptintf("Hello\n");
     // TODO: incomplete
+    FILE *fptr;
+    char *fileName;
+    fileName = malloc(sizeof(req->request_uri) + sizeof("./www"));
+    strcpy(fileName, "./www");
+    strcat(fileName, req->request_uri);
+    fptr = fopen(fileName, "r");
+    if(fptr == NULL)
+    {
+        printf("ERROR OPENING %s\n", fileName);
+    }
+    fclose(fptr);
 
     return res;
 }
