@@ -205,25 +205,98 @@ void PrintHTTPRequest(struct httprequest *req)
 struct httpresponse *GenerateHTTPResponse(struct httprequest *req)
 {
     struct httpresponse *res = malloc(sizeof(struct httpresponse));
-    // TODO: incomplete
+
     FILE *fptr;
     char *fileName;
     fileName = malloc(sizeof(req->request_uri) + sizeof("./www"));
     strcpy(fileName, "./www");
     strcat(fileName, req->request_uri);
-    fptr = fopen(fileName, "r");
-    if(fptr == NULL)
+    if(fptr = fopen(fileName, "rb"))
+    {
+        printf("SUCCES OPENENING %s\n", fileName);
+        res->status = 200;
+        res->version = req->version;
+        res->reason = "OK\n";
+    }
+    else
     {
         printf("ERROR OPENING %s\n", fileName);
+        res->status = 404;
+        res->version = req->version;
+        res->reason = "Not Found\n";
+        return res;
     }
+    char *filebuffer;
+    fseek( fptr , 0L , SEEK_END);
+    long filelength = ftell ( fptr );
+    rewind( fptr );
+    filebuffer = malloc(MAX_FILE_LEN);
+    if(fread( filebuffer , filelength, 1 , fptr))
+        //printf("%s", filebuffer);
+    res->body = filebuffer;
     fclose(fptr);
+    
+    //creating Date when response is sent
+    char buf[40];
+    time_t now = time(0);
+    struct tm tm = *gmtime(&now);
+    strftime(buf, sizeof buf, "%a, %d %b %Y %H:%M:%S %Z", &tm);
+        //printf("Time is: [%s]\n", buf);
 
+    //creating Default Expiration Date
+    char expire[40];
+    strftime(expire, sizeof expire,"Mon, 1 Jan 2001 00:00:00 GMT", &tm);
+        //printf("Expire time is: [%s]\n", expire);
+
+    //first in last out. Last in First out
+        //AddHeaderToResponse(res, "Content-Length", "Unknown");
+        //AddHeaderToResponse(res, "Content-Type", "text/html\n");
+    AddHeaderToResponse(res,"Expires", strcat(expire, "\n"));
+    AddHeaderToResponse(res,"Date", strcat(buf, "\n"));
+
+    //char *temp;
+    //scanf("%s", temp);
+while( res->headers->next != NULL )
+    {
+        //printf("\t%s: %s\n", res->headers->name, res->headers->value);
+        res->headers = res->headers->next;
+    }
+    char *temp;
+    scanf("%s", temp);
     return res;
 }
 
 void SendHTTPResponse(struct httpresponse *res, int cfd)
 {
     // TODO: incomplete
+    char *buffer;
+    
+    //DOES NOT WORK
+    switch(res->status)
+    {
+        case 404:
+            strcpy(buffer, "HTTP/1.1 404 Not Found\r\n");
+            send(cfd, buffer, strlen(buffer), 0);
+            strcpy(buffer, "<html>\n<head>\n<title>Method Not Implemented</title>\n</head>\r\n");
+            send(cfd, buffer, strlen(buffer), 0);
+            strcpy(buffer, "<body>\n<p>501 HTTP request method not supported.</p>\n</body>\n</html>\r\n");
+            send(cfd, buffer, strlen(buffer), 0);
+            break;
+        default:
+            strcpy(buffer, "HTTP/1.1 200 Ok\r\n");
+            send(cfd, buffer, strlen(buffer), 0);
+    }
+
+    //Header
+    while(res->headers->next != NULL)
+    {
+        strcpy(buffer, strcat(res->headers->name, res->headers->value));
+            //printf("%s\n", buffer);
+    }
+
+    //Body
+    strcpy(buffer, res->body);
+    send(cfd, buffer, strlen(buffer), 0);
 }
 
 int main(int argc, char *argv[])
