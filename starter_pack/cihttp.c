@@ -206,26 +206,31 @@ struct httpresponse *GenerateHTTPResponse(struct httprequest *req)
 {
     struct httpresponse *res = malloc(sizeof(struct httpresponse));
 
+    // TODO: incomplete
+
+    //Grabs FILE's location (www/uri)
     FILE *fptr;
     char *fileName;
     fileName = malloc(sizeof(req->request_uri) + sizeof("./www"));
     strcpy(fileName, "./www");
     strcat(fileName, req->request_uri);
-    if(fptr = fopen(fileName, "rb"))
-    {
-        printf("SUCCES OPENENING %s\n", fileName);
+
+    if((fptr = fopen(fileName, "rb")))
+    {    
+        //printf("SUCCESS OPENING %s", fileName);
         res->status = 200;
         res->version = req->version;
-        res->reason = "OK\n";
+        res->reason = "OK\n";  
     }
-    else
-    {
-        printf("ERROR OPENING %s\n", fileName);
+    else   
+    {   
+        //printf("ERROR OPENING %s\n", fileName);
         res->status = 404;
         res->version = req->version;
         res->reason = "Not Found\n";
         return res;
     }
+
     char *filebuffer;
     fseek( fptr , 0L , SEEK_END);
     long filelength = ftell ( fptr );
@@ -254,15 +259,12 @@ struct httpresponse *GenerateHTTPResponse(struct httprequest *req)
     AddHeaderToResponse(res,"Expires", strcat(expire, "\n"));
     AddHeaderToResponse(res,"Date", strcat(buf, "\n"));
 
-    //char *temp;
-    //scanf("%s", temp);
-while( res->headers->next != NULL )
+    while( res->headers->next != NULL )
     {
         //printf("\t%s: %s\n", res->headers->name, res->headers->value);
         res->headers = res->headers->next;
     }
-    char *temp;
-    scanf("%s", temp);
+
     return res;
 }
 
