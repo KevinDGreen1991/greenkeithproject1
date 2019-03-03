@@ -17,7 +17,6 @@ void AddHeaderToRequest(struct httprequest *req, char *name, char *value)
     NVL *header = malloc(sizeof(NVL));
     header->name = name;
     header->value = value;
-    //printf("\nADDING %s %s", header->name, header->value);
     if (req->headers) 
         header->next = req->headers;
     else
@@ -29,7 +28,6 @@ void AddPostDataToRequest(struct httprequest *req, char *name, char *value)
     NVL *header = malloc(sizeof(NVL));
     header->name = name;
     header->value = value;
-    //printf("\nADDING %s %s", header->name, header->value);
     if (req->post_data) 
         header->next = req->post_data;
     else
@@ -54,9 +52,8 @@ struct httprequest *ParseHTTPRrequest(char *data)
     struct httprequest *req;
     req = malloc(sizeof(struct httprequest));
 
-    // TODO: incomplete
-     //READS THROUGH ENTIRE STRING
-    //printf("%s\n", data);
+    // TODO: Complete
+    //READS THROUGH ENTIRE STRING
     bool methodAssigned = false;
     int i = 0;
     //printf("%s\n", methodRequestVersion);
@@ -81,7 +78,6 @@ struct httprequest *ParseHTTPRrequest(char *data)
     }
     //HANDLE REQUEST
     token = strtok(NULL, " \n");
-    //printf("%s", methodRequestVersion);
     req->request_uri = token;
 
     //HANDLE VERSION
@@ -96,23 +92,7 @@ struct httprequest *ParseHTTPRrequest(char *data)
     token = strtok(NULL, "\r\n");
 
     //HANDLING THE REST
-    /*
-    char temp1[256];
-    char temp2[256];
-    //if(strstr(token, "Host:"))
-    //    printf("TESTING!\n");
-    strcpy(temp1, token);
-    //printf("%s == %s --- ", token, temp1);
-    token = strtok(NULL, "\r\n");
-    strcpy(temp2, token);
-    //printf("%s == %s --- ", token, temp2);
-    //printf("%s && %s\n", temp1,temp2);
-    //printf("%s && %s\n", temp1,temp2);
-    AddHeaderToRequest(req, temp1, temp2);
-    //token = strtok(NULL, "\r\n");
-    token = strtok(NULL, " \n");
-    */
-   char *post;
+    char *post;
     while(token != NULL)
     {
         char *temp1a;
@@ -133,7 +113,6 @@ struct httprequest *ParseHTTPRrequest(char *data)
                         //printf("HANDLE POST DATA HERE\n");
                         post = malloc(strlen(temp2a) * sizeof(char));
                         strcpy(post, temp2a);
-                        //printf("%s\n", post);
                         char *dataToken;
                         dataToken = strtok(post, "=&\r\n");
                         while(dataToken != NULL)
@@ -148,13 +127,6 @@ struct httprequest *ParseHTTPRrequest(char *data)
                             AddPostDataToRequest(req, temp1b, temp2b);
                             dataToken = strtok(NULL, "=");
                         }
-                        /*printf("%s\n", dataToken);
-                        dataToken = strtok(NULL, "&\r\n");
-                        printf("%s\n", dataToken);
-                        dataToken = strtok(NULL, "=");
-                        printf("%s\n", dataToken);
-                        dataToken = strtok(NULL, "&\r\n");
-                        printf("%s\n", dataToken);*/
                 }
                 else
                 {
@@ -213,16 +185,19 @@ struct httpresponse *GenerateHTTPResponse(struct httprequest *req)
     //Grabs FILE's location (www/uri)
     FILE *fptr;
     char *fileName;
+    //HANDLES POST response
     if(req->method == POST)
     {
             fileName = malloc(sizeof("./www/response.html"));
             strcpy(fileName, "./www/response.html");
     }
+    //CHECKS FOR OTHER
     else{
     fileName = malloc(sizeof(req->request_uri) + sizeof("./www"));
     strcpy(fileName, "./www");
     strcat(fileName, req->request_uri);
     }
+    //SUCCESFULLY FOUND FILE
     if((fptr = fopen(fileName, "rb")))
     {    
         //printf("SUCCESS OPENING %s", fileName);
@@ -230,6 +205,7 @@ struct httpresponse *GenerateHTTPResponse(struct httprequest *req)
         res->version = req->version;
         res->reason = "OK\n";  
     }
+    //OTHERWISE SEND 404
     else   
     {   
         printf("ERROR OPENING %s\n", fileName);
@@ -239,6 +215,7 @@ struct httpresponse *GenerateHTTPResponse(struct httprequest *req)
         //return res;
     }
     char *filebuffer;
+    //IF NOT A 404
     if(res->status != 404)
     {
     fseek( fptr , 0L , SEEK_END);
@@ -249,7 +226,8 @@ struct httpresponse *GenerateHTTPResponse(struct httprequest *req)
         //printf("%s", filebuffer);
     res->body = filebuffer;
     }
-    else if(res->status == 404)
+    //IF A 404
+    else
     {
         if(fptr = fopen("./www/error.html", "rb"))
         {
@@ -267,24 +245,20 @@ struct httpresponse *GenerateHTTPResponse(struct httprequest *req)
         }
     }
     fclose(fptr);
-    //creating Date when response is sent
+    //CREATING DATA FOR RESPONSE
     char buf[40];
     time_t now = time(0);
     struct tm tm = *gmtime(&now);
     strftime(buf, sizeof buf, "%a, %d %b %Y %H:%M:%S %Z", &tm);
         //printf("Time is: [%s]\n", buf);
 
-    //creating Default Expiration Date
+    //CREATE DEFAULT EXPIRATION DATE
     char expire[40];
     strftime(expire, sizeof expire,"Mon, 1 Jan 2001 00:00:00 GMT", &tm);
-        //printf("Expire time is: [%s]\n", expire);
-
-    //first in last out. Last in First out
-        //AddHeaderToResponse(res, "Content-Length", "Unknown");
-        //AddHeaderToResponse(res, "Content-Type", "text/html\n");
     AddHeaderToResponse(res,"Expires", strcat(expire, "\n"));
     AddHeaderToResponse(res,"Date", strcat(buf, "\n"));
 
+    //NO IDEA WHY BY YOU MUST READ THROUGH ALL HEADERS OR ELSE IT DOES NOT SEND PROPERLY
     while( res->headers->next != NULL )
     {
         //printf("\t%s: %s\n", res->headers->name, res->headers->value);
@@ -296,40 +270,30 @@ struct httpresponse *GenerateHTTPResponse(struct httprequest *req)
 
 void SendHTTPResponse(struct httpresponse *res, int cfd)
 {
-    // TODO: incomplete
+    // TODO: Complete
     char *buffer;
     
-    //DOES NOT WORK
     
     switch(res->status)
     {
         case 404:
             strcpy(buffer, "HTTP/1.1 404 Not Found\r\n");
             send(cfd, buffer, strlen(buffer), 0);
-            //strcpy(buffer, "<html>\n<head>\n<title>Method Not Implemented</title>\n</head>\r\n");
-            //send(cfd, buffer, strlen(buffer), 0);
-            //strcpy(buffer, "<body>\n<p>501 HTTP request method not supported.</p>\n</body>\n</html>\r\n");
-            //send(cfd, buffer, strlen(buffer), 0);
+
             break;
         default:
             strcpy(buffer, "HTTP/1.1 200 Ok\r\n");
             send(cfd, buffer, strlen(buffer), 0);
     }
-    /*
-    char header[1024];
-    snprintf(header, 1024, "HTTP/%0.1f %d %s\r\n", res->version, res->status, res->reason);
-    strcpy(buffer, header);
-    */
-    //printf("%s\n", buffer);
-    //send(cfd, buffer, strlen(buffer), 0);
-    //Header
+
+    //HEADERS
     while(res->headers->next != NULL)
     {
         strcpy(buffer, strcat(res->headers->name, res->headers->value));
             //printf("%s\n", buffer);
     }
 
-    //Body
+    //BODY
     strcpy(buffer, res->body);
     send(cfd, buffer, strlen(buffer), 0);
 }
