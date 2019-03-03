@@ -24,6 +24,18 @@ void AddHeaderToRequest(struct httprequest *req, char *name, char *value)
         header->next = NULL;
     req->headers = header;
 }
+void AddPostDataToRequest(struct httprequest *req, char *name, char *value)
+{
+    NVL *header = malloc(sizeof(NVL));
+    header->name = name;
+    header->value = value;
+    //printf("\nADDING %s %s", header->name, header->value);
+    if (req->post_data) 
+        header->next = req->post_data;
+    else
+        header->next = NULL;
+    req->post_data = header;
+}
 
 void AddHeaderToResponse(struct httpresponse *res, char *name, char *value)
 {
@@ -44,7 +56,7 @@ struct httprequest *ParseHTTPRrequest(char *data)
 
     // TODO: incomplete
      //READS THROUGH ENTIRE STRING
-    
+    //printf("%s\n", data);
     bool methodAssigned = false;
     int i = 0;
     //printf("%s\n", methodRequestVersion);
@@ -100,6 +112,7 @@ struct httprequest *ParseHTTPRrequest(char *data)
     //token = strtok(NULL, "\r\n");
     token = strtok(NULL, " \n");
     */
+   char *post;
     while(token != NULL)
     {
         char *temp1a;
@@ -108,76 +121,52 @@ struct httprequest *ParseHTTPRrequest(char *data)
         temp1a = (char*) malloc(strlen(token) * sizeof(char));
         strcpy(temp1a, token);
         token = strtok(NULL, "\r\n");
+        //printf("%s\n", token);
         if(token != NULL)
             {
                 temp2a = (char*) malloc(strlen(token) * sizeof(char));
                 //printf(" VALUE %s\n", token);
                 strcpy(temp2a, token);
-                AddHeaderToRequest(req, temp1a, temp2a);
-                token = strtok(NULL, " \n");
+                if(req->method == POST && strcmp(temp1a, "\r") == 0)
+                {
+                    //HANDLE POST DATA HERE
+                        //printf("HANDLE POST DATA HERE\n");
+                        post = malloc(strlen(temp2a) * sizeof(char));
+                        strcpy(post, temp2a);
+                        //printf("%s\n", post);
+                        char *dataToken;
+                        dataToken = strtok(post, "=&\r\n");
+                        while(dataToken != NULL)
+                        {
+                            char *temp1b;
+                            char *temp2b;
+                            temp1b = (char*) malloc(strlen(dataToken) * sizeof(char));
+                            strcpy(temp1b, dataToken);
+                            dataToken = strtok(NULL, "&\r\n");
+                            temp2b = (char*) malloc(strlen(dataToken) * sizeof(char));
+                            strcpy(temp2b, dataToken);
+                            AddPostDataToRequest(req, temp1b, temp2b);
+                            dataToken = strtok(NULL, "=");
+                        }
+                        /*printf("%s\n", dataToken);
+                        dataToken = strtok(NULL, "&\r\n");
+                        printf("%s\n", dataToken);
+                        dataToken = strtok(NULL, "=");
+                        printf("%s\n", dataToken);
+                        dataToken = strtok(NULL, "&\r\n");
+                        printf("%s\n", dataToken);*/
+                }
+                else
+                {
+                    AddHeaderToRequest(req, temp1a, temp2a);
+                    token = strtok(NULL, " \n");
+                    post = temp2a;
+                }
+                //printf("%s\n", token);
             }
     }
+    //printf("%s\n", )
 
-    //DO NOT DELETE
-    /*while(token != NULL)
-    {
-        printf("%s\n", token);
-        token = strtok(NULL, "\r\n");
-    }*/
-
-    //printf("TESTING\n%s\n", token);
-
-    /*
-    //THIS STUFF WORKS FOR NOW
-    token = strtok(data, " \n");
-    //HANDLE METHOD
-
-    //char temp[strlen(token)];
-    //for(i = 0; i < strlen(token); i++)
-        //temp[i] = token[i];
-
-    //char *methodRequestVersion = strtok(temp, " ");
-    
-    for(i = 0; !methodAssigned && i < 3; i++)
-    {
-        if(strcmp(token, implemented_methods[i]) == 0)
-        {
-            methodAssigned = true;
-            req->method = i;
-        }
-    }
-    if(!methodAssigned)
-    {
-        //THROW EXCEPTION HERE WHEN IMPLEMENTED
-        printf("ERROR: Method not recognized\n");
-        return NULL;
-    }
-    //HANDLE REQUEST
-    token = strtok(NULL, " \n");
-    //printf("%s", methodRequestVersion);
-    req->request_uri = token;
-
-
-    //HANDLE VERSION
-    char Version[20];
-    token = strtok(NULL," \n");
-    strcpy(Version, token);
-    //char *temp = Version[5];
-    for(i = 0; Version[i+5] != '\0'; i++)
-        Version[i] = Version[i+5];
-    Version[i] = '\0';
-    req->version = atof(Version);
-    token = strtok(NULL," \n");
-   
-    printf("REMAINING INFOMRATION\n");
-    while(token != NULL)
-    {   
-        //printf("%c\n", token[strlen(token)-1]);
-        if(token[strlen(token) -1] == ':')
-            //printf("Start Header:\n");
-        printf("%s\n", token);
-        token = strtok(NULL, " \n");
-    }*/
     return req;
 }
 
@@ -192,6 +181,19 @@ void PrintHTTPRequest(struct httprequest *req)
     {
         printf("        %s %s\n", headers->name, headers->value);
         headers = headers->next;
+    }
+    if(req->method == POST)
+    {
+        printf("\n");
+        NVL *post = req->post_data;
+        while(post != NULL)
+        {
+            if(post->next == NULL)
+                printf("%s=%s", post->name, post->value);
+            else
+                printf("%s=%s&", post->name, post->value);
+            post = post->next;
+        }
     }
     /*
     //THE FOLLOWING IS FOR TESTING INDIVIDUAL HTTP REQUESTS
@@ -211,10 +213,16 @@ struct httpresponse *GenerateHTTPResponse(struct httprequest *req)
     //Grabs FILE's location (www/uri)
     FILE *fptr;
     char *fileName;
+    if(req->method == POST)
+    {
+            fileName = malloc(sizeof("./www/response.html"));
+            strcpy(fileName, "./www/response.html");
+    }
+    else{
     fileName = malloc(sizeof(req->request_uri) + sizeof("./www"));
     strcpy(fileName, "./www");
     strcat(fileName, req->request_uri);
-
+    }
     if((fptr = fopen(fileName, "rb")))
     {    
         //printf("SUCCESS OPENING %s", fileName);

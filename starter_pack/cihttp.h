@@ -63,6 +63,7 @@ struct httpresponse *GenerateHTTPResponse(struct httprequest *req);
 void PrintHTTPRequest(struct httprequest *req);
 struct httprequest *ParseHTTPRrequest(char *data);
 void AddHeaderToResponse(struct httpresponse *res, char *name, char *value);
+void AddPostDataToRequest(struct httprequest *res, char *name, char *value);
 void AddHeaderToRequest(struct httprequest *req, char *name, char *value);
 void *GetInAddr(struct sockaddr *sa);
 
