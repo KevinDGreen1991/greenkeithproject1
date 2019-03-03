@@ -224,14 +224,15 @@ struct httpresponse *GenerateHTTPResponse(struct httprequest *req)
     }
     else   
     {   
-        //printf("ERROR OPENING %s\n", fileName);
+        printf("ERROR OPENING %s\n", fileName);
         res->status = 404;
         res->version = req->version;
         res->reason = "Not Found\n";
-        return res;
+        //return res;
     }
-
     char *filebuffer;
+    if(res->status != 404)
+    {
     fseek( fptr , 0L , SEEK_END);
     long filelength = ftell ( fptr );
     rewind( fptr );
@@ -239,8 +240,25 @@ struct httpresponse *GenerateHTTPResponse(struct httprequest *req)
     if(fread( filebuffer , filelength, 1 , fptr))
         //printf("%s", filebuffer);
     res->body = filebuffer;
+    }
+    else if(res->status == 404)
+    {
+        if(fptr = fopen("./www/error.html", "rb"))
+        {
+            fseek( fptr , 0L , SEEK_END);
+            long filelength = ftell ( fptr );
+            rewind( fptr );
+            filebuffer = malloc(MAX_FILE_LEN);
+            if(fread( filebuffer , filelength, 1 , fptr))
+                printf("%s", filebuffer);
+            res->body = filebuffer;
+        }
+        else
+        {
+            printf("ERROR OPENING 404\n");
+        }
+    }
     fclose(fptr);
-    
     //creating Date when response is sent
     char buf[40];
     time_t now = time(0);
@@ -274,21 +292,28 @@ void SendHTTPResponse(struct httpresponse *res, int cfd)
     char *buffer;
     
     //DOES NOT WORK
+    
     switch(res->status)
     {
         case 404:
             strcpy(buffer, "HTTP/1.1 404 Not Found\r\n");
             send(cfd, buffer, strlen(buffer), 0);
-            strcpy(buffer, "<html>\n<head>\n<title>Method Not Implemented</title>\n</head>\r\n");
-            send(cfd, buffer, strlen(buffer), 0);
-            strcpy(buffer, "<body>\n<p>501 HTTP request method not supported.</p>\n</body>\n</html>\r\n");
-            send(cfd, buffer, strlen(buffer), 0);
+            //strcpy(buffer, "<html>\n<head>\n<title>Method Not Implemented</title>\n</head>\r\n");
+            //send(cfd, buffer, strlen(buffer), 0);
+            //strcpy(buffer, "<body>\n<p>501 HTTP request method not supported.</p>\n</body>\n</html>\r\n");
+            //send(cfd, buffer, strlen(buffer), 0);
             break;
         default:
             strcpy(buffer, "HTTP/1.1 200 Ok\r\n");
             send(cfd, buffer, strlen(buffer), 0);
     }
-
+    /*
+    char header[1024];
+    snprintf(header, 1024, "HTTP/%0.1f %d %s\r\n", res->version, res->status, res->reason);
+    strcpy(buffer, header);
+    */
+    //printf("%s\n", buffer);
+    //send(cfd, buffer, strlen(buffer), 0);
     //Header
     while(res->headers->next != NULL)
     {
