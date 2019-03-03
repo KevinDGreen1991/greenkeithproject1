@@ -200,7 +200,7 @@ void PrintHTTPRequest(struct httprequest *req)
     char *temp;
     scanf("%s", temp);
     */
-    //printf("\n")
+    printf("\n");
     
 }
 
@@ -443,7 +443,8 @@ int main(int argc, char *argv[])
 
             free(req);
             free(response);
-            free(data);
+            //FREEING OF THE DATA RESULTS IN A STRANGE ERROR WHEN TESTING form.html
+            //free(data);
 
             exit(0);
             break;
