@@ -250,7 +250,7 @@ struct httpresponse *GenerateHTTPResponse(struct httprequest *req)
             rewind( fptr );
             filebuffer = malloc(MAX_FILE_LEN);
             if(fread( filebuffer , filelength, 1 , fptr))
-                printf("%s", filebuffer);
+                //printf("%s", filebuffer);
             res->body = filebuffer;
         }
         else
